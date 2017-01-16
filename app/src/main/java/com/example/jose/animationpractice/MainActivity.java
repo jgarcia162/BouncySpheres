@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -46,11 +47,26 @@ public class MainActivity extends AppCompatActivity {
 
     public void addBall(View view) {
         int randomXposition = random.nextInt(screenWidth - 30) + 30;
-        int randomYposition = random.nextInt(screenHeight - 30) + 30;
-        BouncingBall ball = new BouncingBall(this, randomXposition, randomYposition, 30);
+        int randomYposition = random.nextInt(ballContainerView.getHeight() - 30) + 30;
+        Log.i("SCREEN HEIGHT", screenHeight+"");
+        BouncingBall ball = new BouncingBall(this, randomXposition, randomYposition, 30,screenWidth-30,ballContainerView.getHeight()-30);
         ball.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+        ball.activateMovement(true);
         ballContainerView.addView(ball);
         viewsToUpdate.add(ball);
+    }
+
+    public void addThousandBalls(View view){
+        for (int i = 0; i < 1000; i++) {
+            int randomXposition = random.nextInt(screenWidth - 30) + 30;
+            int randomYposition = random.nextInt(ballContainerView.getHeight() - 30) + 30;
+            Log.i("SCREEN HEIGHT", screenHeight+"");
+            BouncingBall ball = new BouncingBall(this, randomXposition, randomYposition, 30,screenWidth-30,ballContainerView.getHeight()-30);
+            ball.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+            ball.activateMovement(true);
+            ballContainerView.addView(ball);
+            viewsToUpdate.add(ball);
+        }
     }
 
     public void removeBall(View view) {
@@ -67,4 +83,5 @@ public class MainActivity extends AppCompatActivity {
             viewsToUpdate.clear();
         }
     }
+
 }
